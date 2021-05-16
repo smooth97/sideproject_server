@@ -17,6 +17,6 @@ app.use(morgan('combined'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use('/', testRouter);
+app.use('/api', testRouter);
 
 server.listen(PORT, () => console.log(`> http://localhost:${PORT}`));
