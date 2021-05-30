@@ -1,12 +1,21 @@
 import { Db, MongoClient, MongoClientOptions } from 'mongodb';
 
-const uri = `mongodb://${process.env.MONGO_USER}:${encodeURIComponent(process.env.MONGO_PASSWORD)}@${process.env.MONGO_HOST}:${process.env.MONGO_PORT}`;
+const {
+  MONGO_HOST,
+  MONGO_PORT,
+  MONGO_USER,
+  MONGO_PASSWORD,
+  MONGO_DATABASE,
+  MONGO_POOLSIZE
+} = process.env;
+
+const uri = `mongodb://${MONGO_USER}:${encodeURIComponent(MONGO_PASSWORD)}@${MONGO_HOST}:${MONGO_PORT}`;
 const options: MongoClientOptions = {
   authSource: 'admin',
   readPreference: 'primary',
   ssl: false,
   useUnifiedTopology: true,
-  poolSize: process.env.MONGO_POOLSIZE ? +process.env.MONGO_POOLSIZE : 10
+  poolSize: +MONGO_POOLSIZE
 };
 console.log(uri);
 
@@ -27,7 +36,7 @@ class Mongo {
           return;
         }
   
-        const db = client.db(process.env.MONGO_DATABASE);
+        const db = client.db(MONGO_DATABASE);
         resolve(db);
       });
     })
