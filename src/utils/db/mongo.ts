@@ -17,7 +17,6 @@ const options: MongoClientOptions = {
   useUnifiedTopology: true,
   poolSize: +MONGO_POOLSIZE
 };
-console.log(uri);
 
 class Mongo {
   private db: Db;
@@ -28,7 +27,7 @@ class Mongo {
     })();
   }
 
-  createConnection(): Promise<Db> {
+  private createConnection(): Promise<Db> {
     return new Promise((resolve, reject) => {
       MongoClient.connect(uri, options, (err, client) => {
         if (err) {

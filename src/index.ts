@@ -1,12 +1,11 @@
 require('dotenv').config();
 import express from 'express';
 import cors from 'cors';
-import helmet from 'helmet';
-import morgan from 'morgan';
 import { createServer } from 'http';
 import Postgre from './utils/db/postgre';
 import Mongo from './utils/db/mongo';
 import testRouter from './routers/testRouter';
+import { loggerMiddleware } from './utils/logger/winston';
 
 const { NODE_ENV, PORT } = process.env;
 
@@ -16,9 +15,10 @@ const mongo = new Mongo();
 const app = express();
 const server = createServer(app);
 
+app.disable('x-powered-by');
+
 /*if (NODE_ENV === 'development')*/ app.use(cors());
-app.use(helmet());
-app.use(morgan('combined'));
+app.use(loggerMiddleware);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
