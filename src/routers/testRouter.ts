@@ -14,7 +14,7 @@ const testRouter = (postgre: Postgre, mongo: Mongo) => {
       const { rows } = await postgre.query(`SELECT TO_CHAR(NOW(), 'YYYY-MM-DD HH24:MI:SS') AS NOW`);
       res.status(200).json({
         code: 200,
-        payload: { rows }
+        payload: { result: rows }
       });
     } catch (err) {
       console.error(err);
@@ -51,7 +51,7 @@ const testRouter = (postgre: Postgre, mongo: Mongo) => {
       res.status(200).json({
         code: 200,
         payload: { result }
-      })
+      });
     } catch (err) {
       console.error(err);
 
